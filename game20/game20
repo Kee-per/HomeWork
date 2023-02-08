@@ -1,6 +1,6 @@
 import numpy as np
 
-def game20(number: int = 1) -> int:
+def game20(number: int = np.random.randint(0, 101)) -> int:
     """Сначала устанавливаем любое random число, а потом уменьшаем
     или увеличиваем его в зависимости от того, больше оно или меньше нужного.
        Функция принимает загаданное число и возвращает число попыток
@@ -11,15 +11,24 @@ def game20(number: int = 1) -> int:
         int: Число попыток
     """
     count = 0
-    predict = np.random.randint(1, 100)
-    
-    while number != predict:
-        count += 1
-        if number > predict:
-            predict += 10
-        elif number < predict:
-            predict -= 1
+    max_number = 100
+    min_number = 0
+    predict_number = np.random.randint(0, 101)
 
+    while predict_number != number:
+        count += 1
+        if predict_number > number:
+            max_number = predict_number - 1
+            predict_number = (max_number + min_number) // 2
+
+
+        elif predict_number < number:
+            min_number = predict_number + 1
+            predict_number = (max_number + min_number) // 2
+
+        else:
+            break
+        
     return count
 
 def score_game(random_predict) -> int:
